@@ -1,0 +1,14 @@
+html
+  head
+    title= 'Users'
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+  body
+    h1= 'Kullanıcı Ekleme'
+    input(type="text" placeholder="mesajınız" id='name')
+    input(type="button" value="Gönder" onClick='kaydet()')
+script.
+    const socket = io()
+    function kaydet(){
+       socket.emit('chattername', $('#name').val())
+    }
