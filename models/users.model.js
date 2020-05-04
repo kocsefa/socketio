@@ -13,7 +13,8 @@ mongoose.connection.on('connected', function () {
 })
 
 const usersSchema = new Schema({
-    name: String
+    name: String,
+    sockets: Array
 })
 
 const usersModel = mongoose.model('Users', usersSchema, 'users')
