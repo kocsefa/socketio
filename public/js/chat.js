@@ -1,19 +1,26 @@
 // Bu şekilde bağlanacaksın hub'a
 var chatHub = io('/chat')
-
 var notificationHub = io('/notification')
+
 notificationHub.on('notification', function (payload) {
   console.log(payload)
 })
+.on('connect',()=>{
+  console.log(`NotificationHubConnected`)
+})
 
-chatHub.on('new message', function (payload) {
+chatHub.on('message', function (payload) {
   console.log(payload)
+})
+.on('connect',()=>{
+  console.log(`ChatHubConnected`)
 })
 
 function kaydet(){
-  // chatHub.emit('chattername', $('#name').val())
-  chatHub.emit('message', $('#name').val())
+  console.log(`Click`)
 
-  console.log('clicked')
-  //burdan soket ile gidiyo mesaj ama göçe gidiyo yakalayamıyom
+  chatHub.on('connect',()=>{
+    console.log(`ChatHubConnected`)
+    chatHub.emit('message', {msg: $('#name').val()})
+  })
 }

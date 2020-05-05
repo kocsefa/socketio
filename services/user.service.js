@@ -8,7 +8,7 @@ async function findOne(a) {
 }
 async function create(a) {
   await userModel.insertMany(a).then(()=>{
-    console.log('başarılı ekleme')
+    console.log(`user.service - Başarılı Ekleme ${a}`)
   })
 }
 
