@@ -12,11 +12,13 @@ mongoose.connection.on('connected', function () {
     console.log('users.model - Connection to MongoDB established.')
 })
 
-const usersSchema = new Schema({
-    name: String,
-    sockets: Array
+const userSchema = new Schema({
+    username: String,
+    passwordHash: String,
+    salt: String,
+    active: Boolean
 })
 
-const usersModel = mongoose.model('Users', usersSchema, 'users')
+const userModel = mongoose.model('Users', userSchema, 'users')
 
-module.exports = usersModel
+module.exports = userModel
