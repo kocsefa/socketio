@@ -1,6 +1,6 @@
 // Bu şekilde bağlanacaksın hub'a
-var chatHub = io('/chat')
-var notificationHub = io('/notification')
+var chatHub = io('/chathub')
+var notificationHub = io('/notificationhub')
 
 notificationHub.on('notification', function (payload) {
   console.log(payload)
@@ -16,7 +16,7 @@ chatHub.on('message', function (payload) {
   //   console.log(`ChatHubConnected`)
   // })
 
-function kaydet() {
+function sendmessage() {
   //    Bu akm mesajı sunucuya emitleniyo
   chatHub.emit('message', { msg: $('#name').val() })
 }

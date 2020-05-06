@@ -8,14 +8,14 @@ const path = require('path')
 const bodyParser = require('body-parser')
 
 // Modellerin oluşturulduğundan emin olmak için ilk başta import edilebilir.
-const messageService = require('./services/message.service')
+const messageService = require('./services/chat.service')
 const userService = require('./services/user.service')
 
 // En hiçbirine ihtiyaç duymadandan en fazlasına ihtiyaç duyana göre import et.
 const chatHub = require('./hubs/chat.hub')(io)
 const notificationHub = require('./hubs/notification.hub')(io)
 
-const messageRouter = require('./routes/message.route')
+const chatRouter = require('./routes/chat.route')
 const userRouter = require('./routes/user.route')
 
 app.use(express.static('public'))
@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'pug')
 
 // Message router'ına message service'i inject etmiş olduk.
-app.use('/messages', messageRouter(
+app.use('/chat', chatRouter(
     { messageService },
     { chatHub }
 ))

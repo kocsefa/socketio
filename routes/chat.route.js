@@ -1,9 +1,9 @@
 const router = require('express').Router()
 
-module.exports = (messageService) => {
+module.exports = (chatService) => {
 
   router.get('/', (req, res) => {
-    res.send('NOT IMPLEMENTED')
+    res.render('chat')
   })
 
   return router
