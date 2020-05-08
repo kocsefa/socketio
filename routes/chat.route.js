@@ -3,7 +3,8 @@ const router = require('express').Router()
 module.exports = (chatService) => {
 
   router.get('/', (req, res) => {
-    res.render('chat')
+    console.log(req.cookies)
+    res.render('chat', { username: req.cookies.authenticatedUser})
   })
 
   return router
