@@ -6,25 +6,27 @@ module.exports = (services, hubs) => {
     // Giriş kontrolü yap
     res.render('login', { action: 'login' })
   })
+
   router.get('/login', async (req, res) => {
     // Giriş kontrolü yap
     res.render('login', { action: 'login' })
   })
-  router.get('/register', async (req, res) => {
-
-    res.render('login', { action: 'register' })
-  })
 
   router.post('/login', async (req, res) => {
     let { username, password } = req.body
-
-    const authenticated = await services.userService.login({ username, password })
-
-    if (authenticated) {
-      return res.cookie('authenticatedUser', `${username}`).redirect('/chat')
+    console.log(username, password,'login.route')
+    const token = await services.userService.login({ username, password })
+    console.log(token)
+    if (token) {
+      return res.status(200).send(token)
     }
 
-    return res.render('login', { action: 'login', username: username, error: 'Kullanıcı adı veya parola hatalı' })
+    return res.status(500).send({ action: 'login', username: username, error: 'Kullanıcı adı veya parola hatalı' })
+  })
+
+  router.get('/register', async (req, res) => {
+
+    res.render('login', { action: 'register' })
   })
 
   router.post('/register', async (req, res) => {

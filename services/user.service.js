@@ -1,8 +1,9 @@
 const crypto = require('crypto')
 const userModel = require('../models/users.model')
+const jwt = require('jsonwebtoken')
+const config = require('../config')
 
 async function create(newUser) {
-
   // Kullanıcı var mı?
   const exists = await userModel.exists({ username: newUser.username })
 
@@ -44,21 +45,25 @@ async function login(user) {
   const userRecord = await userModel.findOne({ username: user.username })
 
   if (userRecord) {
-    const password = hashPassword(user.password,userRecord.salt)
-    if (password === userRecord.passwordHash)
-      return true
-    else
+    const password = hashPassword(user.password, userRecord.salt)
+    if (password === userRecord.passwordHash) {
+      const token = jwt.sign(
+        { username: user.username },
+        config.jwtSecret,
+        { expiresIn: config.jwtDuration })
+      return token
+    } else
       return false
   }
 }
 
-function hashPassword(password,salt) {
+function hashPassword(password, salt) {
   let hash
   try {
     // Hash password oluşturuluyor
     hash = (crypto.pbkdf2Sync(password, salt, 10, 64, 'sha512')).toString('hex')
   } catch{
-    throw 'Şifreleme aşamasında sorun oluştu.'
+    throw 'user.service - Şifreleme aşamasında sorun oluştu.'
   }
   return hash
 }

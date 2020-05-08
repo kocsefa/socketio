@@ -1,6 +1,7 @@
 // Bu şekilde bağlanacaksın hub'a
 var chatHub = io('/chathub')
 var notificationHub = io('/notificationhub')
+const storage = window.localStorage
 
 notificationHub.on('notification', function (payload) {
   console.log(payload)

@@ -25,27 +25,27 @@ block content
           a.my-3.px-3.py-2.font-semibold(href="/login") Geri
           button.my-3.bg-green-500.px-3.py-2.rounded.font-semibold.text-white Kayıt Ol
     else
-      form(method='post' action="/login").w-64.bg-white.shadow-md.rounded.p-8.mb-4.ml-2.flex.flex-col
+      div.w-64.bg-white.shadow-md.rounded.p-8.mb-4.ml-2.flex.flex-col
         div.flex.w-full.flex-col
           h1.mb-3.font-semibold ÜYE GİRİŞİ
           input.w-full.bg-transparent.leading-loose.outline-none.border-b.mb-4(
             placeholder="Kullanıcı Adı"
-            name="username"
+            id="username"
             type="text"
             autocomplete="off"
             value=username)
           input.w-full.bg-transparent.leading-loose.outline-none.border-b(
             placeholder="Şifre"
-            name="password"
+            id="password"
             type="password"
             autocomplete="off")
           div.h-8.w-full
             if error
               span.text-red-500.text-xs= '* ' + error
         div.flex.flex-1.justify-between
-          button.my-3.bg-green-500.px-3.py-2.rounded.font-semibold.text-white Giriş Yap
-          a.my-3.px-3.py-2(href="/register").font-semibold Kayıt Ol
+          button(onclick='signIn()' focus:class='outline-none').my-3.bg-green-500.px-3.py-2.rounded.font-semibold.text-white Giriş Yap
+          button(onclick='signUp()' focus:class='outline-none').my-3.bg-transparent.px-3.py-2.font-semibold Kayıt Ol
 
 
 block scripts
-  script(src="/js/index.js")
+  script(src="/js/login.js")

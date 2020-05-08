@@ -4,7 +4,7 @@ module.exports = (chatService) => {
 
   router.get('/', (req, res) => {
     console.log(req.cookies)
-    res.render('chat', { username: req.cookies.authenticatedUser})
+    res.render('chat')
   })
 
   return router
