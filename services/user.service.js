@@ -45,8 +45,10 @@ async function login(user) {
   const userRecord = await userModel.findOne({ username: user.username })
 
   if (userRecord) {
+    // Şifre doğru mu?
     const password = hashPassword(user.password, userRecord.salt)
     if (password === userRecord.passwordHash) {
+      // Token ver
       const token = jwt.sign(
         { username: user.username },
         config.jwtSecret,

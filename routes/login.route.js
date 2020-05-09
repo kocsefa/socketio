@@ -6,22 +6,17 @@ module.exports = (services, hubs) => {
     // Giriş kontrolü yap
     res.render('login', { action: 'login' })
   })
+  router.post('/', async (req, res) => {
 
-  router.get('/login', async (req, res) => {
-    // Giriş kontrolü yap
-    res.render('login', { action: 'login' })
-  })
-
-  router.post('/login', async (req, res) => {
     let { username, password } = req.body
-    console.log(username, password,'login.route')
+    
     const token = await services.userService.login({ username, password })
-    console.log(token)
+
     if (token) {
       return res.status(200).send(token)
     }
 
-    return res.status(500).send({ action: 'login', username: username, error: 'Kullanıcı adı veya parola hatalı' })
+    return res.status(401).send({ action: 'login', username: username, error: 'Kullanıcı adı veya parola hatalı' })
   })
 
   router.get('/register', async (req, res) => {

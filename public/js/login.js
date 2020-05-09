@@ -8,7 +8,8 @@ function signIn() {
     url: '/login',
     data: body
   }).then(res => {
-      localStorage.setItem('token',res.token)
+    document.cookie =`token = ${res.data}`
+    window.location.replace('/chat')
   }).catch(function (error) {
     console.log(error);
   })

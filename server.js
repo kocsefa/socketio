@@ -5,6 +5,7 @@ const io = require('socket.io')(server)
 const port = 3000
 
 const bodyParser = require('body-parser')
+const cookieparser = require('cookie-parser')
 const authCheck = require('./controllers/authCheck')
 
 // Modellerin oluşturulduğundan emin olmak için ilk başta import edilebilir.
@@ -23,25 +24,27 @@ const userRouter = require('./routes/user.route')
 app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieparser())
 app.set('view engine', 'pug')
 
 
 
 // Message router'ına message service'i inject etmiş olduk.
 app.use('/chat', authCheck, chatRouter(
-  { messageService },
+  { messageService, userService },
   { chatHub }
 ))
 
-app.use('/', loginRouter(
+app.use('/login', loginRouter(
   { userService },
   { chatHub, notificationHub }
 ))
-// app.use('/', indexRouter())
+
+app.use('/', indexRouter())
 
 // Message router'ına message service'i, chatHub'ı ve notificationHub'ı inject
 // etmiş olduk.
-app.use('/users', userRouter(
+app.use('/users', authCheck, userRouter(
   { userService },
   { chatHub, notificationHub }
 ))
